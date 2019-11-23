@@ -5,14 +5,14 @@ import { AppComponent } from './app.component';
 import  {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import { JobGiverComponent } from './job-giver/job-giver.component';
-import { JobGiverService } from 'src/app/services/job-giver.service';
 import { EditGiverComponent } from './job-giver/edit-giver/edit-giver.component';
 import { ShowGiverComponent } from './job-giver/show-giver/show-giver.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSortModule } from '@angular/material';
-import { environment } from "src/environments/environment";
+import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { JobGiverService } from './shared/job-giver.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [JobGiverService, AngularFireModule],
+  providers: [JobGiverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
