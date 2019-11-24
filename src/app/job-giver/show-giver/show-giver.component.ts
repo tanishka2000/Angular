@@ -6,11 +6,6 @@ import { JobGiver } from 'src/app/shared/job-giver.model';
 import { map } from 'rxjs/operators';
 
 
-/*export interface PeriodicElement {
-  DeptName: string;
-  DeptID: number;
-}*/
-
 @Component({
   selector: 'app-show-giver',
   templateUrl: './show-giver.component.html',
@@ -40,22 +35,24 @@ export class ShowGiverComponent implements OnInit {
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
       myData(){
-        this.service.getData().subscribe(actionArray => {
-          console.log("actionArray:: ", actionArray)
-          this.list = actionArray.map(item => {
-            return {
-              idd: item.payload.doc.id, ...item.payload.doc.data()
-            } as JobGiver;
-          })
-          
-        });
 
-       //this.listData = new MatTableDataSource();
-       this.listData = new MatTableDataSource(this.list);
-       console.log("this.list:: ", this.list)
-       console.log("this.listData:: ", this.listData)
-        this.listData.sort = this.sort;
-        this.listData.paginator = this.paginator;
+
+          this.service.getData().subscribe(actionArray => {
+            console.log("actionArray:: ", actionArray)
+            this.list = actionArray.map(item => {
+              return {
+                idd: item.payload.doc.id, ...item.payload.doc.data()
+              } as JobGiver;
+            })
+
+            //this.listData = new MatTableDataSource();
+            this.listData = new MatTableDataSource(this.list);
+            console.log("this.list:: ", this.list)
+            console.log("this.listData:: ", this.listData)
+            this.listData.sort = this.sort;
+            this.listData.paginator = this.paginator;
+          })
+
 
       }
 
