@@ -1,48 +1,36 @@
-<div style="overflow: auto;">
+<table class="table table-hover">
+    <thead>
+      <th>IDD</th>
+      <th>Title</th>
+      <th>Fee</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of list">
+        <td >{{emp.idd}}</td>
+        <td >{{emp.title}}</td>
+        <td >{{emp.fee}}</td>
+        <!-- <td>
+            I am here
+        </td>
+        <td><a class="btn text-danger" (click)="onDelete(emp.id)"><i class="fa fa-trash"></i></a></!  -->
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <div style="overflow: auto;">
     <div class="mat-elevation-z8">
-        <mat-form-field align="center">
+        <mat-form-field style= "align-items: center;">
                 <input placeholder="Search" matInput type="text" (keyup)="applyFilter($event.target.value)" />
         </mat-form-field>
         <table mat-table [dataSource]="listData" class="mat-elevation-z8" matSort matPaginator>
-
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-              
-                <!-- Position Column
-                <ng-container matColumnDef="Options">
-                        <thead>
-                  <th mat-header-cell *matHeaderCellDef> Options </th> </thead>
-                  <tbody><td mat-cell *matCellDef="let row">
-                        <button mat-icon-button (click)="onEdit(row)">
-                            <mat-icon>launch</mat-icon>
-                        </button>
-    
-                        <button mat-icon-button color="warn" (click)="onDelete(row.DeptID)">
-                            <mat-icon>delete_outline</mat-icon>
-                        </button>
-                    </td></tbody>
-                </ng-container>-->
-              
-               <!-- <tbody>
-                    <tr *ngFor="let element of datas">
-                       <td>{{ element.payload.doc.data().idd }}</td>
-                       <td>{{ element.payload.doc.data().title }}</td>
-                       <td><span 
-                            *ngFor="let coffee of order.payload.doc.data().coffeeOrder">
-                           {{ coffee }}
-                          </span>
-                       </td>
-                    </tr>
-                    </tbody>-->
-
-                <!-- Name Column -->
                 <ng-container matColumnDef="idd" >
                     <thead>
                  <th mat-sort-header *matHeaderCellDef > idd </th></thead>
-                 <tbody> <td mat-cell *ngFor="let element of Datatype"> {{element.payload.doc.data().idd}} </td></tbody>
+                 <tbody> <td mat-cell *ngFor="let element"> {{element.idd}} </td></tbody>
                 </ng-container>
               
-                <!-- Weight Column -->
+                Weight Column
                 <ng-container matColumnDef="title">
                     <thead><th mat-sort-header *matHeaderCellDef> Title </th></thead>
                     <tbody><td mat-cell *matCellDef="let element"> {{element.title}} </td></tbody>
@@ -50,7 +38,7 @@
 
                 <ng-container matColumnDef="fee">
                     <thead><th mat-sort-header *matHeaderCellDef> fee </th></thead>
-                    <tbody><td mat-cell *matCellDef="let element"> {{element.payload.doc.data().fee}} </td></tbody>
+                    <tbody><td mat-cell *matCellDef="let element"> {{element.fee}} </td></tbody>
                 </ng-container>
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -63,4 +51,4 @@
   </mat-paginator>
               
     </div>
-</div>
+</div> -->

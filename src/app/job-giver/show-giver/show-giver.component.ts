@@ -1,16 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
-import { JobGiverService } from 'src/app/services/job-giver.service';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { JobGiverService } from 'src/app/shared/job-giver.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Datatype } from 'src/app/datatype.model';
+import { JobGiver } from 'src/app/shared/job-giver.model';
 import { map } from 'rxjs/operators';
- 
-
-/*export interface PeriodicElement {
-  DeptName: string;
-  DeptID: number;
-}*/
-
 
 
 @Component({
@@ -18,116 +11,54 @@ import { map } from 'rxjs/operators';
   templateUrl: './show-giver.component.html',
   styleUrls: ['./show-giver.component.css']
 })
+
 export class ShowGiverComponent implements OnInit {
- 
-  //datas : Datatype[];
-  //constructor(private firestore: AngularFirestore) { }
-  //arr : Datatype[] = [];
-  constructor(private jobservice: JobGiverService, private firestore: AngularFirestore) { }
 
-  listData: MatTableDataSource<Datatype> = new MatTableDataSource([]) ;
-  //listData = new MatTableDataSource<Datatype>();
-  displayedColumns : string[] = ['idd','title','fee'];
-  //dataSource = new MatTableDataSource<Account>();
- 
+  list: JobGiver[];
+  constructor(private service: JobGiverService,
+    private firestore: AngularFirestore) { }
 
-  //@ViewChild(MatSort, null) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-
- /* getData(){
-    return this.firestore.collection('datas').snapshotChanges();
+  ngOnInit() {
+    this.myData();
   }
-  refreshDepList(){
-    var dummyData = [
-      {DeptID: 2, DeptName: 'work'},
-      {DeptID: 20, DeptName: 'play'},
-      {DeptID: 39, DeptName: 'study'},
-      {DeptID: 22, DeptName: 'code'},
-      {DeptID: 37, DeptName: 'cook'},
-      {DeptID: 27, DeptName: 'hit'},
-      {DeptID: 34, DeptName: 'drive'},
-      {DeptID: 28, DeptName: 'swim'},
-      {DeptID: 30, DeptName: 'sleep'},
-      {DeptID: 266, DeptName: 'eat'},
 
-      //this.service.getDepList().subscribe(data =>{
-        //this.listData = new MatTableDataSource(data)
-        //this.listData.sort = new MatSort();
-      //}); 
-    ]
-    this.listData = new MatTableDataSource(dummyData);
-    }*/
+  arr : JobGiver[] = [];
 
-    myData(){
-      this.jobservice.getData().subscribe(change => {
-        return change.map(a => {
-         //const data = a.payload.doc.data() as Datatype;
-         return {
-           idd: a.payload.doc.id, ...a.payload.doc.data()
-         }         
-         })
-     });
-      
-     //this.listData = new MatTableDataSource();
-      this.listData.sort = this.sort;
-      this.listData.paginator = this.paginator;
-      
-    }
-    ngOnInit() {
-      this.myData();
+    listData: MatTableDataSource<JobGiver>;
+    //listData = new MatTableDataSource<Datatype>();
+    displayedColumns : string[] = ['idd','title','fee'];
+    //dataSource = new MatTableDataSource<Account>();
 
-  /*  var shoe = this.jobservice.getData().subscribe(change => {
-         return change.map(a => {
-          const data = a.payload.doc.data() as Datatype;
-          return {
-            idd: a.payload.doc.data(),
-            title :a.payload.doc.data(),
-            fee : a.payload.doc.data()
-          }//as Datatype;
-          //return data;
 
-          console.log("Hello" + this.idd);
+    //@ViewChild(MatSort, null) sort: MatSort;
+    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+      myData(){
+
+
+          this.service.getData().subscribe(actionArray => {
+            console.log("actionArray:: ", actionArray)
+            this.list = actionArray.map(item => {
+              return {
+                idd: item.payload.doc.id, ...item.payload.doc.data()
+              } as JobGiver;
+            })
+
+            //this.listData = new MatTableDataSource();
+            this.listData = new MatTableDataSource(this.list);
+            console.log("this.list:: ", this.list)
+            console.log("this.listData:: ", this.listData)
+            this.listData.sort = this.sort;
+            this.listData.paginator = this.paginator;
           })
-      });
-
-      
-      
-
-      this.listData = new MatTableDataSource();
-      this.listData.sort = this.sort;
-      this.listData.paginator = this.paginator;
 
 
+      }
+
+      applyFilter(filteValue: string){
+        this.listData.filter = filteValue.trim().toLocaleLowerCase();
+      }
 
 
-      */
-
-
-
-      /*(this.jobgiverService.getData().pipe.map(changes=>{
-        return changes.map(a=>{
-            const data = a.payload.doc.data();
-            const idd = a.payload.doc.idd;
-            const title = a.payload.doc.title;
-            const fee = a.payload.doc.fee;
-            return data;
-        })
-      })*/
-      /*this.jobgiverService.getData().subscribe(res => (
-        this.listData = res)
-      );
-
-      this.listData.getData().subscribe(dataset:Datatype[]=>{
-        this.arr = dataset;
-        console.log(this.arr);
-      })*/
-    
-    }
-   
-    applyFilter(filteValue: string){
-      this.listData.filter = filteValue.trim().toLocaleLowerCase();
-    }
-
-    
 }
